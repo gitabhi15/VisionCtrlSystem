@@ -10,7 +10,7 @@ class face_training:
         self.win_l = win_l
 
     def grab_frame(self, file_path, testName):
-        cam = cv2.VideoCapture(self.cam_port, cv2.CAP_DSHOW)
+        cam = cv2.VideoCapture(self.cam_port)
 
         if not cam.isOpened():
             print("Couldn't open camera. Please try again.")
