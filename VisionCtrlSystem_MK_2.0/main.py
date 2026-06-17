@@ -7,9 +7,12 @@ def main():
     print("Press Q to exit ")
 
     print("Please enter the required variables: (Camera Port, Window Height, Window Length)")
-    cam_p = int(input("Enter the camera port"))
-    w_h = int(input("Enter the window height"))
-    w_l = int(input("Enter the window length"))
+    cam_p = input("Enter the camera port (e.g., 0 for local, or http://IP:81/stream for ESP32): ")    
+    w_h = int(input("Enter the window height: "))
+    w_l = int(input("Enter the window length: "))
+
+    if cam_p.isdigit():
+        cam_p = int(cam_p)
 
     ft = face_training(cam_port=cam_p, win_h=w_h, win_l=w_l)
 
