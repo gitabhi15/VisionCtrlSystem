@@ -4,13 +4,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.visionctrlsys.doorcam.model.AccessRequestDTO;
+import com.visionctrlsys.doorcam.repository.AccessLogRepository;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import com.visionctrlsys.doorcam.model.AccessLog;
+
 @RestController
 @RequestMapping("/api/v1")
 public class AccessController {
+    private final AccessLogRepository repository;
+
+    public AccessController(AccessLogRepository repository) {
+        this.repository = repository;
+    }
+
     @PostMapping("/access")
     public String httpResponse(@RequestBody AccessRequestDTO jsonObject) {
 
@@ -42,6 +51,8 @@ public class AccessController {
         }
 
         if (successCounter == 4) {
+            AccessLog log = new AccessLog(username, action, cam_id, timestamp);
+            repository.save(log);
             System.out.println(
                     "----------------------------------------------DTO PARAMETERS----------------------------------------------");
             System.out.println("Username : " + username + "\t" + "Action : " + action + "\t" + "Cam ID :" + cam_id
